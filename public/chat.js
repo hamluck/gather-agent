@@ -58,6 +58,14 @@
     });
 
     const data = await res.json();
+    if (res.status === 401 && session) {
+      clearSession();
+      session = null;
+      chatContainer.classList.add("hidden");
+      nicknameModal.classList.remove("hidden");
+      while (messagesDiv.firstChild) messagesDiv.removeChild(messagesDiv.firstChild);
+      throw new Error("세션이 만료되었습니다. 닉네임을 다시 등록해주세요.");
+    }
     if (!res.ok) throw new Error(data.error || "요청 실패");
     return data;
   }
