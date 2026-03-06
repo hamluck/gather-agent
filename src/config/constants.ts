@@ -5,7 +5,7 @@ export const BODY_SIZE_LIMIT = "10kb";
 
 // Gather Bot
 export const PATROL_RADIUS = 3;
-export const MOVE_INTERVAL_MS = 500;
+export const MOVE_INTERVAL_MS = 1500;
 export const PROXIMITY_DISTANCE = 5;
 export const PROXIMITY_CHECK_INTERVAL_MS = 3000;
 export const GREET_COOLDOWN_MS = 5 * 60 * 1000;
