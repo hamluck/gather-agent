@@ -24,6 +24,8 @@ function setupBot(g: Game): void {
     name: env.bot.name,
     textStatus: env.bot.status,
     isNpc: true,
+    x: 13,
+    y: 28,
   });
   logger.info("Gather bot entered space");
 
