@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기획자 Claude</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="nickname-modal" class="modal">
+      <div class="modal-content">
+        <h2>기획자 Claude</h2>
+        <p>닉네임을 입력해주세요</p>
+        <input type="text" id="nickname-input" maxlength="20" placeholder="닉네임 (최대 20자)" autocomplete="off">
+        <button id="nickname-submit">시작</button>
+      </div>
+    </div>
+
+    <div id="chat-container" class="hidden">
+      <div id="chat-header">
+        <span id="bot-name">기획자 Claude</span>
+        <span id="user-name"></span>
+      </div>
+      <div id="chat-messages"></div>
+      <div id="chat-input-area">
+        <input type="text" id="message-input" placeholder="메시지를 입력하세요..." autocomplete="off" maxlength="500">
+        <button id="send-btn">전송</button>
+      </div>
+      <div id="hint-bar">/help · /meeting start · /meeting end · /reset</div>
+    </div>
+  </div>
+  <script src="chat.js"></script>
+</body>
+</html>
