@@ -1,5 +1,5 @@
 import type { Game } from "@gathertown/gather-game-client";
-import { PATROL_RADIUS, MOVE_INTERVAL_MS } from "../config/constants";
+import { PATROL_RADIUS, MOVE_INTERVAL_MS, PROXIMITY_DISTANCE } from "../config/constants";
 import { logger } from "../utils/logger";
 
 let patrolTimer: NodeJS.Timeout | null = null;
@@ -31,6 +31,13 @@ export function startPatrol(game: Game): void {
         ];
         logger.info(`Patrol center: (${cx}, ${cy}), radius: ${r}`);
       }
+
+      // 근처에 플레이어가 있으면 멈춤
+      const hasNearbyPlayer = Object.entries(game.players).some(([id, p]) => {
+        if (id === me.id || p.map !== me.map) return false;
+        return Math.abs(p.x - me.x) + Math.abs(p.y - me.y) <= PROXIMITY_DISTANCE;
+      });
+      if (hasNearbyPlayer) return;
 
       const target = waypoints[currentWaypointIndex];
 
