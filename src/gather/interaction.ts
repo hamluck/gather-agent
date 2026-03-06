@@ -1,4 +1,5 @@
 import type { Game } from "@gathertown/gather-game-client";
+import { BOT_SPAWN_X, BOT_SPAWN_Y } from "../config/constants";
 import { logger } from "../utils/logger";
 
 export function placeInteractionObject(game: Game): void {
@@ -11,8 +12,8 @@ export function placeInteractionObject(game: Game): void {
       }
 
       game.addObject(me.map, {
-        x: me.x,
-        y: me.y,
+        x: BOT_SPAWN_X,
+        y: BOT_SPAWN_Y,
         width: 1,
         height: 1,
         type: 1, // EMBEDDED_WEBSITE
@@ -25,7 +26,7 @@ export function placeInteractionObject(game: Game): void {
         _tags: [],
       });
 
-      logger.info(`Interaction object placed at (${me.x}, ${me.y})`);
+      logger.info(`Interaction object placed at (${BOT_SPAWN_X}, ${BOT_SPAWN_Y})`);
     } catch (err: any) {
       logger.error("Failed to place interaction object", err.message);
     }

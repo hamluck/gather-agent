@@ -3,6 +3,7 @@ import WebSocket from "isomorphic-ws";
 (global as any).WebSocket = WebSocket;
 
 import { env } from "../config/env";
+import { BOT_SPAWN_X, BOT_SPAWN_Y } from "../config/constants";
 import { logger } from "../utils/logger";
 import { placeInteractionObject } from "./interaction";
 import { setupProximityGreeting, stopProximityGreeting } from "./events";
@@ -24,10 +25,18 @@ function setupBot(g: Game): void {
     name: env.bot.name,
     textStatus: env.bot.status,
     isNpc: true,
-    x: 13,
-    y: 28,
+    x: BOT_SPAWN_X,
+    y: BOT_SPAWN_Y,
   });
   logger.info("Gather bot entered space");
+
+  // enter 좌표가 무시될 수 있으므로 teleport로 강제 이동
+  setTimeout(() => {
+    try {
+      const me = g.getMyPlayer();
+      if (me) g.teleport(me.map, BOT_SPAWN_X, BOT_SPAWN_Y);
+    } catch { /* ignore */ }
+  }, 2000);
 
   placeInteractionObject(g);
   setupProximityGreeting(g);

@@ -4,6 +4,8 @@ export const MAX_CONVERSATION_HISTORY = 20;
 export const BODY_SIZE_LIMIT = "10kb";
 
 // Gather Bot
+export const BOT_SPAWN_X = 13;
+export const BOT_SPAWN_Y = 28;
 export const PROXIMITY_DISTANCE = 5;
 export const PROXIMITY_CHECK_INTERVAL_MS = 3000;
 export const GREET_COOLDOWN_MS = 5 * 60 * 1000;
