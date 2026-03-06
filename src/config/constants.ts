@@ -4,12 +4,7 @@ export const MAX_CONVERSATION_HISTORY = 20;
 export const BODY_SIZE_LIMIT = "10kb";
 
 // Gather Bot
-export const PATROL_WAYPOINTS = [
-  { x: 10, y: 10 },
-  { x: 15, y: 10 },
-  { x: 15, y: 15 },
-  { x: 10, y: 15 },
-];
+export const PATROL_RADIUS = 3;
 export const MOVE_INTERVAL_MS = 500;
 export const PROXIMITY_DISTANCE = 5;
 export const PROXIMITY_CHECK_INTERVAL_MS = 3000;
