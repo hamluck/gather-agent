@@ -10,31 +10,28 @@ let waypoints: { x: number; y: number }[] = [];
 export function startPatrol(game: Game): void {
   stopPatrol();
   currentWaypointIndex = 0;
-
-  // 스폰 위치 기준으로 웨이포인트 생성
-  const me = game.getMyPlayer();
-  if (!me) {
-    logger.warn("Gather bot player not found, patrol delayed");
-    return;
-  }
-
-  const cx = me.x;
-  const cy = me.y;
-  const r = PATROL_RADIUS;
-  waypoints = [
-    { x: cx + r, y: cy },
-    { x: cx + r, y: cy + r },
-    { x: cx, y: cy + r },
-    { x: cx - r, y: cy },
-    { x: cx - r, y: cy - r },
-    { x: cx, y: cy - r },
-  ];
-  logger.info(`Patrol center: (${cx}, ${cy}), radius: ${r}`);
+  waypoints = [];
 
   patrolTimer = setInterval(() => {
     try {
       const me = game.getMyPlayer();
       if (!me) return;
+
+      // 첫 틱에서 스폰 위치 기준 웨이포인트 생성
+      if (waypoints.length === 0) {
+        const cx = me.x;
+        const cy = me.y;
+        const r = PATROL_RADIUS;
+        waypoints = [
+          { x: cx + r, y: cy },
+          { x: cx + r, y: cy + r },
+          { x: cx, y: cy + r },
+          { x: cx - r, y: cy },
+          { x: cx - r, y: cy - r },
+          { x: cx, y: cy - r },
+        ];
+        logger.info(`Patrol center: (${cx}, ${cy}), radius: ${r}`);
+      }
 
       const target = waypoints[currentWaypointIndex];
       const dx = target.x - me.x;
@@ -51,7 +48,7 @@ export function startPatrol(game: Game): void {
         game.move(dy > 0 ? MoveDirection.Down : MoveDirection.Up);
       }
     } catch {
-      // ignore movement errors
+      // ignore movement errors (player not ready yet)
     }
   }, MOVE_INTERVAL_MS);
 
