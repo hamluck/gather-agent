@@ -19,15 +19,13 @@ function isGatherEnabled(): boolean {
 }
 
 function setupBot(g: Game): void {
-  g.engine?.sendAction({
-    $case: "setName",
-    setName: { name: env.bot.name },
+  // 스페이스에 플레이어 스폰 (브라우저 없이 SDK만으로 입장)
+  g.enter({
+    name: env.bot.name,
+    textStatus: env.bot.status,
+    isNpc: true,
   });
-
-  g.engine?.sendAction({
-    $case: "setTextStatus",
-    setTextStatus: { textStatus: env.bot.status },
-  });
+  logger.info("Gather bot entered space");
 
   startPatrol(g);
   setupProximityGreeting(g);
