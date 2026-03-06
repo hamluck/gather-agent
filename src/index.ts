@@ -19,7 +19,7 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      frameAncestors: ["'self'", "https://app.gather.town", "https://gather.town", "https://app.v2.gather.town"],
+      frameAncestors: ["'self'", "https://app.gather.town", "https://gather.town"],
     },
   },
 }));
