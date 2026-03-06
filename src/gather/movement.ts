@@ -1,5 +1,4 @@
 import type { Game } from "@gathertown/gather-game-client";
-import { MoveDirection } from "@gathertown/gather-game-client";
 import { PATROL_RADIUS, MOVE_INTERVAL_MS } from "../config/constants";
 import { logger } from "../utils/logger";
 
@@ -34,21 +33,27 @@ export function startPatrol(game: Game): void {
       }
 
       const target = waypoints[currentWaypointIndex];
-      const dx = target.x - me.x;
-      const dy = target.y - me.y;
 
-      if (dx === 0 && dy === 0) {
+      if (me.x === target.x && me.y === target.y) {
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.length;
         return;
       }
 
+      // teleport로 한 칸씩 이동 (맵 밖으로 나가지 않도록)
+      let nx = me.x;
+      let ny = me.y;
+      const dx = target.x - me.x;
+      const dy = target.y - me.y;
+
       if (Math.abs(dx) > Math.abs(dy)) {
-        game.move(dx > 0 ? MoveDirection.Right : MoveDirection.Left);
+        nx += dx > 0 ? 1 : -1;
       } else {
-        game.move(dy > 0 ? MoveDirection.Down : MoveDirection.Up);
+        ny += dy > 0 ? 1 : -1;
       }
+
+      game.teleport(me.map, nx, ny);
     } catch {
-      // ignore movement errors (player not ready yet)
+      // ignore movement errors
     }
   }, MOVE_INTERVAL_MS);
 
