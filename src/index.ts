@@ -8,6 +8,7 @@ import { BODY_SIZE_LIMIT } from "./config/constants";
 import { initDatabase, closeDatabase } from "./storage/database";
 import router from "./api/router";
 import { startReminderCron, stopReminderCron } from "./features/reminder";
+import { connectGatherBot, disconnectGatherBot } from "./gather/client";
 import { logger } from "./utils/logger";
 
 const app = express();
@@ -58,6 +59,7 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 initDatabase();
 logger.info("Database initialized");
 startReminderCron();
+connectGatherBot();
 
 const PORT = env.server.port;
 const server = app.listen(PORT, () => {
@@ -69,6 +71,7 @@ const server = app.listen(PORT, () => {
 function shutdown() {
   logger.info("Shutting down...");
   stopReminderCron();
+  disconnectGatherBot();
   server.close(() => {
     closeDatabase();
     logger.info("Server closed");
