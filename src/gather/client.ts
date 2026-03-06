@@ -4,7 +4,7 @@ import WebSocket from "isomorphic-ws";
 
 import { env } from "../config/env";
 import { logger } from "../utils/logger";
-import { startPatrol, stopPatrol } from "./movement";
+import { placeInteractionObject } from "./interaction";
 import { setupProximityGreeting, stopProximityGreeting } from "./events";
 
 const MAX_RECONNECT = 5;
@@ -27,7 +27,7 @@ function setupBot(g: Game): void {
   });
   logger.info("Gather bot entered space");
 
-  startPatrol(g);
+  placeInteractionObject(g);
   setupProximityGreeting(g);
 }
 
@@ -66,7 +66,6 @@ export function connectGatherBot(): void {
         setupBot(game!);
       } else {
         logger.warn("Gather bot disconnected");
-        stopPatrol();
         stopProximityGreeting();
         attemptReconnect();
       }
@@ -83,7 +82,6 @@ export function disconnectGatherBot(): void {
     clearTimeout(reconnectTimer);
     reconnectTimer = null;
   }
-  stopPatrol();
   stopProximityGreeting();
   if (game) {
     game.disconnect();
